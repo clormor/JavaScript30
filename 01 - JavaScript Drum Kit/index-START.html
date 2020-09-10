@@ -58,7 +58,36 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  // play appropriate sound when a key down event occurs
+  window.addEventListener('keydown', playSound)
 
+  // add transition end event listeners to all key containers
+  const allKeys = document.querySelectorAll('.key')
+  allKeys.forEach(key => {
+    key.addEventListener('transitionend', noLongerPlaying)
+  });
+
+  // plays the appropriate sound and highlights the appropriate key container
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`)
+    
+    if (!audio) {
+      return
+    }
+
+    // rewind to start if already playing
+    audio.currentTime = 0
+    audio.play()
+
+    // add the playing class to the key
+    key.classList.add('playing')
+  }
+
+  // stops highlighting a key container
+  function noLongerPlaying(me) {
+    this.classList.remove('playing')
+  }
 </script>
 
 
