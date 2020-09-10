@@ -31,28 +31,56 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteenth = inventors.filter(i => i.year > 1499 && i.year < 1600)
+    console.table(fifteenth)
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    //const names = inventors.map(i => i.first + ' ' + i.last)
+    const names = inventors.map(i => `${i.first} ${i.last}`)
+    console.table(names)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const oldest = inventors.sort((i1, i2) => i1.year - i2.year)
+    console.table(oldest)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const yearsLived = inventor => (inventor.passed - inventor.year)
+    const sumAges = (total, inventor) => total + yearsLived(inventor)
+    console.log(inventors.reduce(sumAges, 0))
 
     // 5. Sort the inventors by years lived
+    const healthiest = inventors.sort((i1, i2) => yearsLived(i2) - yearsLived(i1))
+    console.table(healthiest)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // Array.from(document.querySelectorAll('.mw-category-group a'))
+    //     .map(e => e.title)
+    //     .filter(e => e.includes('de'))
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let getLastName = (person) => person.split(', ')[0]
+    const sortedNames = people.sort((p1, p2) => getLastName(p1).localeCompare(getLastName(p2)))
+    console.table(sortedNames)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    function sumVehicles(countedVehicles, vehicle) {      
+      if (countedVehicles[vehicle]) {
+        countedVehicles[vehicle]++
+      } else {
+        countedVehicles[vehicle] = 1
+      }
+      return countedVehicles
+    }
+    let countedVehicles = data.reduce(sumVehicles, {})
+    console.log(countedVehicles)
 
   </script>
 </body>
